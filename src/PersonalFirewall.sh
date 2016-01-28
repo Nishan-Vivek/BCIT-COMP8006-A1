@@ -40,9 +40,17 @@ $IPT -A INPUT -i lo -j ACCEPT
 $IPT -A OUTPUT -o lo -j ACCEPT
 
 
-
 #set the default policy to drop
 $IPT --policy INPUT DROP
 $IPT --policy OUTPUT DROP
 $IPT --policy FORWARD DROP
+
+#No forward policy necessary on personal firewall.
+$IPT -t nat --policy PREROUTING DROP
+$IPT -t nat --policy OUTPUT DROP
+$IPT -t nat --policy POSTROUTING DROP
+$IPT -t mangle --policy PREROUTING DROP
+$IPT -t mangle --policy OUTPUT DROP
+
+
 
