@@ -17,6 +17,8 @@ hping3 $SITE -S -p 80 -c 1
 echo "testing SYN port 443"
 hping3 $SITE -S -p 443 -c 1
 
+echo "testing SYN alt port"
+hping3 $SITE -S -p 444 -c 1
 
 
 #Ver
