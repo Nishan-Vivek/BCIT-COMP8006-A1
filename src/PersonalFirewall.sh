@@ -94,6 +94,24 @@ $IPT -A INPUT -i $INTERNET -p udp --sport 0 -j DROP
 $IPT -A OUTPUT -o $INTERNET -p tcp --dport 0 -j DROP
 $IPT -A OUTPUT -o $INTERNET -p udp --dport 0 -j DROP
 
+#Malformed packets and Stealth Scan as per text recommendations
+#  Unclean
+#$IPT -A INPUT -m unclean -j DROP
+#  All  of  the  bits  are  cleared
+$IPT -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+#  SYN  and  FIN  are  both  set
+$IPT -A INPUT -p tcp --tcp-flags SYN,FIN SYN,FIN -j DROP
+#  SYN  and  RST  are  both  set
+$IPT -A INPUT -p tcp --tcp-flags SYN,RST SYN,RST -j DROP
+#  FIN  and  RST  are  both  set
+$IPT -A INPUT -p tcp --tcp-flags FIN,RST FIN,RST -j DROP
+#  FIN  is  the  only  bit  set,  without  the  expected  accompanying ACK
+$IPT -A INPUT -p tcp --tcp-flags ACK,FIN FIN -j DROP
+#  PSH  is  the  only  bit  set,  without  the  expected  accompanying ACK
+$IPT -A INPUT -p tcp --tcp-flags ACK,PSH PSH -j DROP
+#  URG  is  the  only  bit  set,  without  the  expected  accompanying ACK
+$IPT -A INPUT -p tcp --tcp-flags ACK,URG URG -j DROP
+
 
 #Jump allowed WWW traffic to chain
 $IPT -A OUTPUT -o $INTERNET -p tcp -s $IPADDR --sport $UNPRIVPORTS --dport 80 -j WWWout
