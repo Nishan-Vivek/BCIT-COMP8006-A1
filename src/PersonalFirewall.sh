@@ -84,6 +84,14 @@ $IPT -A INPUT -i $INTERNET -p udp -s $DHCP_SERVER --sport 67 --dport 68 -j ACCEP
 $IPT -A OUTPUT -o $INTERNET -p udp -s $IPADDR --sport 68 -d $DHCP_SERVER --dport 67 -j ACCEPT
 $IPT -A INPUT -i $INTERNET -p udp -s $DHCP_SERVER --sport 67 -d $IPADDR --dport 68 -j ACCEPT
 
+
+#Drop all incoming packets from reserved port 0 as well as outbound traffic to port 0.
+$IPT -A INPUT -i $INTERNET -p tcp --sport 0 -j DROP
+$IPT -A INPUT -i $INTERNET -p udp --sport 0 -j DROP
+$IPT -A OUTPUT -o $INTERNET -p tcp --dport 0 -j DROP
+$IPT -A OUTPUT -o $INTERNET -p udp --dport 0 -j DROP
+
+
 #Jump allowed WWW traffic to chain
 $IPT -A OUTPUT -o $INTERNET -p tcp -s $IPADDR --sport $UNPRIVPORTS --dport 80 -j WWWout
 $IPT -A INPUT -i $INTERNET -p tcp ! --syn --sport 80 -d $IPADDR --dport $UNPRIVPORTS -j WWWin
@@ -114,41 +122,4 @@ $IPT -A SSHout -j ACCEPT
 $IPT -A SSHin
 $IPT -A SSHin -j ACCEPT
 
-#No forward policy necessary on personal firewall as per text
-# $IPT -t nat --policy PREROUTING DROP #this appears to be deprecated
-# $IPT -t nat --policy OUTPUT DROP #this appears to be deprecated
-# $IPT -t nat --policy POSTROUTING DROP #this appears to be deprecated
-#$IPT -t mangle --policy PREROUTING DROP
-#$IPT -t mangle --policy OUTPUT DROP
-
-
-#Drop all incoming packets from reserved port 0 as well as outbound traffic to port 0.
-#$IPT -A INPUT -p tcp -m multiport --sport 0 -j DROP
-#$IPT -A INPUT -p tcp -m multiport --dport 0 -j DROP
-#$IPT -A OUTPUT -p tcp -m multiport --dport 0 -j DROP
-#$IPT -A OUTPUT -p tcp -m multiport --sport 0 -j DROP
-
-#Drop inbound traffic to port 80 (http) from source ports less than 1024
-#iptables -A INPUT -p tcp -m multiport --dport 80 -m multiport --sport 0:1023 -j DROP
-
-
-
-#Allow DHCP
-#$IPT -A INPUT -p udp -m udp --dport 67 -s 0.0.0.0/0 -j ACCEPT
-
-
-
-#Permit inbound/outbound ssh packets
-
-#Permit inbound/outbound www packets
-
-#Drop inbound traffic to port 80 (http) from source ports less than 1024
-
-
-
-#Create a set of user-defined chains that will implement accounting rules to keep track of www, ssh traffic, versus the rest of the traffic on your system.
-
-#You must ensure the the firewall drops all inbound SYN packets, unless there is a rule that permits inbound traffic.
-
-#Remember to allow DNS and DHCP traffic through so that your machine can function properly
 
