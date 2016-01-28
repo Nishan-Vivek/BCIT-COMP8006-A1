@@ -64,7 +64,7 @@ $IPT -A OUTPUT -o lo -j ACCEPT
 
 # Allow ICMP
 iptables -A INPUT -p icmp -j OTHin
-iptables -A OUTPUT -p icmp -j ACCEPT
+iptables -A OUTPUT -p icmp -j OTHout
 
 #Allow DNS lookups
 #$IPT -A OUTPUT -o $INTERNET -p udp -s $IPADDR --sport $UNPRIVPORTS -d $NAMESERVER --dport 53 -j ACCEPT
