@@ -1,6 +1,6 @@
-BCIT COMP8006 Assignment 1 - Personal Linux Firewall
+# BCIT COMP8006 Assignment 1 - Personal Linux Firewall
 
-# Objective 
+## Objective 
 
 To implement and test a simple personal Linux firewall.
 
@@ -56,18 +56,18 @@ Extract the submitted zip file on the respective host machine and
 navigate to the “Firewall” folder. As root run the firewall.sh script
 with the following command line:
 
-“./firewall.sh”
+`./firewall.sh`
 
 If you wish to reset the firewall to accept all run the script with the
 “stop” parameter:
 
-“./firewall.sh stop”
+`./firewall.sh stop`
 
 # Tests
 
 ### Test 1 – Verify rules are added
 
-Method: iptables -L -v -n -x
+Method: `iptables -L -v -n -x`
 
 Result: Valid
 
@@ -75,7 +75,7 @@ Result: Valid
 
 ## Test 2 – Verify DNS Lookup with host
 
-Method: host -t a bcit.ca
+Method: `host -t a bcit.ca`
 
 Result: Valid
 
@@ -83,7 +83,7 @@ Result: Valid
 
 ## Test 3 – Verify DHCP with dhcping
 
-Method: dhcping -s “DHCP Server IP”
+Method: `dhcping -s “DHCP Server IP”`
 
 Result: Valid
 
@@ -91,7 +91,7 @@ Result: Valid
 
 ## Test 4 – Verify incoming SSH packet with hping3
 
-Method: hping3 “Firewall IP” -S -p 22 -c 3
+Method: `hping3 “Firewall IP” -S -p 22 -c 3`
 
 Result: Valid
 
@@ -106,7 +106,7 @@ Result: Valid – Screen shots omitted to save space.
 
 ## Test 6 – Verify incoming WWW packet with hping3 port 80
 
-Method: hping3 “Firewall IP” -S -p 80 -c 3
+Method: `hping3 “Firewall IP” -S -p 80 -c 3`
 
 Result: Valid
 
@@ -114,7 +114,7 @@ Result: Valid
 
 ## Test 7 – Verify incoming WWW packet with hping3 port 443
 
-Method: hping3 “Firewall IP” -S -p 443 -c 3
+Method: `hping3 “Firewall IP” -S -p 443 -c 3`
 
 Result: Valid
 
@@ -122,7 +122,7 @@ Result: Valid
 
 ## Test 8 – Verify incoming SSH request with SSH
 
-Method: ssh “firewall ip”
+Method: `ssh “firewall ip”`
 
 Result: Valid
 
@@ -130,7 +130,7 @@ Result: Valid
 
 ## Test 9 – Verify outgoing SSH request with SSH
 
-Method: ssh “outside ip”
+Method: `ssh “outside ip”`
 
 Result: Valid
 
